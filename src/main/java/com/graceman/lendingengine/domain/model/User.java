@@ -26,12 +26,12 @@ public class User {
     private UserRoles role;
 
  @JsonBackReference
-  @OneToMany(mappedBy = "user1", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Loan> loans;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "user2", cascade = CascadeType.ALL)
-    private Set<Loan> loansLent;
+//    @JsonBackReference
+//    @OneToMany(mappedBy = "user2", cascade = CascadeType.ALL)
+//    private Set<Loan> loansLent;
 
 
 }

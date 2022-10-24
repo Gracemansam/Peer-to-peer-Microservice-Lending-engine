@@ -11,6 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class LendingEngineApplication implements CommandLineRunner {
 
+
+
+
+
     @Autowired
     UserRepository userRepository;
 

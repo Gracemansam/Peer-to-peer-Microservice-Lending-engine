@@ -35,14 +35,21 @@ public class LoanApplicationImpl implements LoanApplicationService {
     @Override
     public ResponseEntity<ApiResponse> createLoanApplication(LoanRequest loanRequest) {
         User user = userRepository.findUserByEmail(loanRequest.getEmail()).orElseThrow( () -> new UserNotFoundException ("User not found"));
-        LoanApplication loanApplication = new LoanApplication();
-        loanApplication.setAmount(loanRequest.getAmount());
-        loanApplication.setInterestRate(loanRequest.getInterestRate());
-        loanApplication.setRepaymentInDays(loanRequest.getRepaymentInDays());
-        loanApplication.setUser(user);
-        loanApplication.setApproved(false);
-        loanApplicationRepository.save(loanApplication);
-        return responder.success("Loan application created successfully", loanApplication);
+        if(user.getRole().equals(UserRoles.BORROWER)){
+            LoanApplication loanApplication = new LoanApplication();
+            loanApplication.setAmount(loanRequest.getAmount());
+            loanApplication.setInterestRate(loanRequest.getInterestRate());
+            loanApplication.setRepaymentInDays(loanRequest.getRepaymentInDays());
+            loanApplication.setUser(user);
+            loanApplication.setApproved(false);
+            loanApplicationRepository.save(loanApplication);
+            return responder.success("Loan application created successfully", loanApplication);
+
+        }
+        else {
+            return responder.error("User is not a borrower");
+        }
+
 
     }
     @Override
@@ -60,8 +67,8 @@ public class LoanApplicationImpl implements LoanApplicationService {
                     .amount(loanApplication.getAmount())
                     .interestRate(loanApplication.getInterestRate())
                     .repaymentInDays(loanApplication.getRepaymentInDays())
-                    .user1(lender)
-                    .user2(loanApplication.getUser())
+                    .user(lender)
+                    .user(loanApplication.getUser())
                     .dateLent(LocalDateTime.now())
                     .dateDue(LocalDateTime.now().plusDays(loanApplication.getRepaymentInDays()))
                     .build();

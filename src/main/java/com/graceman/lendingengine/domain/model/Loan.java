@@ -17,11 +17,11 @@ public class Loan {
     private double amount;
     @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name = "user1_id", referencedColumnName = "id")
-    private User user1;
-    @ManyToOne
-    @JoinColumn(name = "user2_id", referencedColumnName = "id")
-    private User user2;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    private User user2;
     private int repaymentInDays;
     private double interestRate;
     private double totalRepayment;
